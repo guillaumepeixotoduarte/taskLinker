@@ -29,6 +29,9 @@ class Tache
     #[ORM\ManyToOne(inversedBy: 'taches')]
     private ?Employe $membre = null;
 
+    #[ORM\ManyToOne(inversedBy: 'taches')]
+    private ?Projet $Projet = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Tache
     public function setMembre(?Employe $membre): static
     {
         $this->membre = $membre;
+
+        return $this;
+    }
+
+    public function getProjet(): ?Projet
+    {
+        return $this->Projet;
+    }
+
+    public function setProjet(?Projet $Projet): static
+    {
+        $this->Projet = $Projet;
 
         return $this;
     }
