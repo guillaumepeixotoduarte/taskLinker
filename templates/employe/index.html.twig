@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EmployeController!{% endblock %}
+
+{% block body %}
+<header>
+    <div id="current-user"></div>
+    <div id="title-page">
+        <h1>{{employe.prenom}} {{employe.nom}}</h1>
+    </div>
+</header>
+
+<div id="content">
+
+    {{ form_start(form) }}
+        <div>
+            {{ form_label(form.nom) }}
+            {{ form_widget(form.nom, {'attr': {'class': ''}}) }}
+        </div>
+        <div>
+            {{ form_label(form.prenom) }}
+            {{ form_widget(form.prenom, {'attr': {'class': ''}}) }}
+        </div>
+        <div>
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email, {'attr': {'class': ''}}) }}
+        </div>
+        {% if form.password is defined %}
+            <div>
+                {{ form_label(form.password) }}
+                {{ form_widget(form.password, {'attr': {'class': ''}}) }}
+            </div>
+        {% endif %}
+        <div class="d-flex gap-2 w-100 align-items-center">
+            <div class="w-50">
+                {{ form_label(form.dateArrive) }}
+                {{ form_widget(form.dateArrive, {'attr': {'class': ''}}) }}
+            </div>
+            <div class="w-50">
+                {{ form_label(form.contrat) }}
+                {{ form_widget(form.contrat, {'attr': {'class': ''}}) }}
+            </div>
+        </div>
+        {% if form.isChef is defined %}
+            <div class="d-flex align-items-center mb-4">
+                {{ form_label(form.isChef, null, {'label_attr': {'class': 'mb-0 me-2'}}) }}
+                {{ form_widget(form.isChef, {'attr': {'class': ''}}) }}
+            </div>
+        {% endif %}
+        {% if form.compteActif is defined %}
+            <div class="d-flex align-items-center mb-4">
+                {{ form_label(form.compteActif, null, {'label_attr': {'class': 'mb-0 me-2'}}) }}
+                {{ form_widget(form.compteActif, {'attr': {'class': ''}}) }}
+            </div>
+        {% endif %}
+        <button class="button button-submit">Enregistrer</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

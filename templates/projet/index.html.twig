@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProjetController!{% endblock %}
+
+{% block body %}
+<header>
+    <div id="current-user"></div>
+    <div id="title-page">
+        <h1>{{ controller_name }}</h1>
+    </div>
+</header>
+
+<div id="content">
+    <div id="projects-container">
+        {% for projet in projets %}
+            <article class="card-project">
+                <a href="projet.html">
+                <h2 class="fw-semibold">{{ projet.nom }}</h2>
+                </a>
+                <div class="card-project-icons">
+                <a href="#"><i class="bi bi-pencil-fill"></i></a>
+                <a href="#"><i class="text-danger bi bi-trash-fill"></i></a>
+                </div>
+            </article>
+        {% endfor %}
+        <article class="card-project">
+            <a href="{{ path('app_projet_add') }}">
+                <i class="bi bi-plus-circle-fill add-project-icon"></i>
+                <h2 class="fw-semibold">Ajouter un projet</h2>
+            </a>
+        </article>
+    </div>
+</div>
+{% endblock %}
