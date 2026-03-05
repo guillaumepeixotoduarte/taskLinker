@@ -40,7 +40,7 @@ final class ProjetController extends AbstractController
             $em->persist($projet);
             $em->flush();
             $this->addFlash('success', 'Le projet a bien été créé');
-            return $this->redirectToRoute('app_projet_index');
+            return $this->redirectToRoute('app_projet_details', ['id' => $projet->getId()]);
             
         }
 
