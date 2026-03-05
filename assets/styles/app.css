@@ -1,122 +1,55 @@
-*{
-    box-sizing: border-box;
-    font-family: 'Manrope', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
 
-body {
+html, body {
     margin: 0;
     min-height: 100vh;
     background-color: #FEFBFB;
 }
 
-main{
-    flex: 1;
+* {
+    box-sizing: border-box;
+    font-family: 'Manrope', sans-serif;
 }
 
-header{
-    background: #4D8077;
-    height: 155px;
-    padding: 30px 80px 10px 80px;
+.w-auto{
+    width: auto;
 }
 
-div#current-user {
-    height: 55px;
+.sf-toolbar {
+    position: fixed;
 }
 
-div#title-page h1 {
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 30px;
-    color: #fff;
-    margin: 0;
-}
-
-.button {
-    background: #B1D89D;
-    padding: 0 15px;
-    border-radius: 10px;
-    height: 54px;
+div#main-container {
     display: flex;
-    align-items: center;
-    color: #4D8077;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: 0em;
-    text-align: center;
-    text-decoration: none;
+    min-height: 100vh;
 }
 
-button.button.button-submit {
-    width: 100%;
-    background: #1F5B50;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: 0em;
-    justify-content: center;
-    border: none;
-    color: #ffffff;
-    height: 70px;
-    margin-top: 5px;
-}
-
-/* ----- Form ----- */
-
-form{
-    width: 320px;
-}
-
-form label {
-    font-size: 16px;
-    line-height: 22px;
-    color: #202020;
-    margin-bottom: 5px;
-    display: block;
-}
-
-form input[type="text"],form input[type="email"],form input[type="password"],form input[type="select"], form input[type="date"], form select, form textarea {
-    border: 1px solid #B5B5B5;
-    display: block;
-    background: white;
-    height: 50px;
-    font-size: 13px;
-    padding: 10px;
-    width: 100%;
-    margin-bottom: 24px;
-    border-radius: 4px;
-}
-
-/* ----- Navbar ----- */
-
-.navbar {
+nav {
     width: 300px;
     flex-grow: 0;
     flex-shrink: 0;
-    background: url(../images/bg-menu.svg) center bottom no-repeat #1C5B50;
+    background: url('../images/bg-menu.svg') center bottom no-repeat #1C5B50;
     padding: 50px 15px;
 }
 
-#logo{
+main {
+    flex: 1;
+}
+
+#logo {
     display: block;
     text-align: center;
 }
 
-#logo img{
+#logo img {
     width: 183px;
     margin-bottom: 70px;
 }
 
-#main-menu{
+ul#main-menu {
     margin: 0;
     list-style: none;
     padding: 0;
-}
-
-ul#main-menu li.active a {
-    background: #DCFDAD;
-    color: #1C5B50;
 }
 
 ul#main-menu li a {
@@ -134,14 +67,42 @@ ul#main-menu li a {
     transition: 0.3s;
 }
 
-div#content{
-    padding: 45px 80px;
+ul#main-menu li:hover a {
+    background: #DCFDAD50;
 }
 
-div#projects-container {
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
+ul#main-menu li.active a {
+    background: #DCFDAD;
+    color: #1C5B50;
+}
+
+ul#main-menu i {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+}
+
+header {
+    background: #4D8077;
+    height: 155px;
+    padding: 30px 80px 10px 80px;
+}
+
+div#current-user {
+    height: 55px;
+}
+
+div#title-page h1 {
+    font-family: Manrope;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 30px;
+    color: #fff;
+    margin: 0;
+}
+
+div#content {
+    padding: 45px 80px;
 }
 
 .card-project {
@@ -153,10 +114,6 @@ div#projects-container {
     font-weight: 700;
     border-radius: 10px;
     position: relative;
-}
-
-.card-project > a, .card-project .card-project-icons {
-    transition: 0.3s;
 }
 
 .card-project > a {
@@ -172,6 +129,26 @@ div#projects-container {
     padding: 15px;
 }
 
+.card-project > a, .card-project .card-project-icons {
+    transition: 0.3s;
+}
+
+.card-project:hover > a, .card-project:hover .card-project-icons {
+    opacity: 0.7;
+}
+
+div#projects-container {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.card-project h2 {
+    font-size: 14px;
+    line-height: 24px;
+    margin: 0;
+}
+
 .card-project-icons {
     position: absolute;
     right: 7px;
@@ -181,13 +158,164 @@ div#projects-container {
     z-index: 1;
 }
 
-.card-project h2 {
+.card-project-icons i {
+    font-size: 15px;
+    height: 15px;
+    width: 15px;
+}
+
+.card-project-icons i.fa-trash {
+    color: #E14343;
+}
+
+.card-project-icons i.fa-pen {
+    color: #4D8077;
+}
+
+.add-project-icon {
+    margin-bottom: 5px;
+}
+
+.flex-header {
+    display: flex;
+    gap: 45px;
+    align-items: center;
+    transform: translateY(-25%);
+}
+
+.avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -12px;
+    background: #1C5B50;
+    border: 1px solid lightgray;
+}
+
+.user-list {
+    display: flex;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.button {
+    background: #B1D89D;
+    padding: 0 15px;
+    border-radius: 10px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    color: #4D8077;
+    font-family: Manrope;
     font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    text-decoration: none;
+}
+
+div#tasks-container {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.task-column {
+    width: 310px;
+    border: 1px solid #D9D9D9;
+    background: white;
+    border-radius: 15px;
+    padding: 20px 12px;
+    max-width: calc(33.33% - 6.67px);
+}
+
+.task-column h2 {
+    font-size: 18px;
+    color: #1C5B50;
+    margin-bottom: 30px;
+    margin-left: 18px;
+}
+
+a.task {
+    display: flex;
+    min-height: 91px;
+    text-decoration: none;
+    background: #F5F5F5;
+    color: #202020;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px 30px;
+    margin-bottom: 10px;
+}
+
+a.task h3 {
+    font-size: 14px;
+    font-weight: 600;
     line-height: 24px;
     margin: 0;
 }
 
-/* ----- Liste des employés ----- */
+a.task p {
+    font-size: 12px;
+    line-height: 24px;
+    color: #5C5C5C;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.task-deadline {
+    font-family: Manrope;
+    font-size: 11.5px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #5C5C5C;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.task-infos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mini-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #1C5B50;
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 8px;
+    color: #FFFFFF;
+}
+
+a.task-add {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #000;
+    margin-top: 25px;
+    display: block;
+    margin-left: 18px;
+}
 
 table#team-container {
     width: 100%;
@@ -226,10 +354,11 @@ table#team-container tr td {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: Manrope;
     font-size: 18px;
     font-weight: 700;
     line-height: 24px;
-    letter-spacing: 2px;
+    letter-spacing: 0em;
     text-align: center;
     color: #fff;
     background: #1C5B50;
@@ -244,18 +373,12 @@ table#team-container tr td {
     color: #202020;
 }
 
-table#team-container thead tr th:last-child {
-    max-width: 315px;
-    width: 315px;
-}
-
 table#team-container tbody tr td:last-child {
     display: flex;
     align-items: center;
     gap: 35px;
     max-width: 315px;
 }
-
 
 a.button-edit-team {
     background: #1F5B50;
@@ -265,8 +388,151 @@ a.button-edit-team {
     justify-content: center;
 }
 
-button.delete-team {
+a.delete-team, button.delete-team {
     color: #E14343;
     font-size: 14px;
     font-weight: 600;
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+}
+
+table#team-container thead tr th:last-child {
+    max-width: 315px;
+    width: 315px;
+}
+
+form input, form select, form textarea {
+    border: 1px solid #B5B5B5;
+    display: block;
+    background: white;
+    height: 50px;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 24px;
+    border-radius: 4px;
+}
+
+form {
+    width: 320px;
+}
+
+form label {
+    font-size: 16px;
+    line-height: 22px;
+    color: #202020;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-flex {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    align-items: center;
+}
+
+.form-flex > div {
+    width: calc(50% - 7.5px);
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+button.button.button-submit {
+    width: 100%;
+    background: #1F5B50;
+    border-radius: 10px;
+    font-family: Manrope;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    justify-content: center;
+    border: none;
+    color: #ffffff;
+    height: 70px;
+    margin-top: 5px;
+}
+
+form ul {
+    list-style: none;
+    padding: 0;
+    color: #E14343;
+    margin: 0;
+    font-style: italic;
+}
+
+a.delete-task {
+    color: #E14343;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    display: block;
+    margin-top: 20px;
+}
+
+form .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #4D8077;
+    border-radius: 30px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+    font-style: normal;
+    height: 24px;
+    padding-left: 5px;
+    padding-right: 20px;
+}
+
+form .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: #fff;
+    border-right: none;
+    right: 5px;
+    left: unset;
+    font-size: 16px;
+}
+
+@media (max-width: 992px) {
+    nav {
+        width: 150px;
+        padding: 50px 10px;
+    }
+    
+    #logo img {
+        width: 100px;
+        margin-bottom: 35px;
+    }
+    
+    ul#main-menu li a {
+        padding: 10px;
+        gap: 20px;
+    }
+
+    div#content {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 668px) {
+    div#content {
+        padding: 30px;
+    }
+    
+    nav {
+        width: 50px;
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 20px;
+    }
+    
+    #logo {
+        display: none;
+    }
+    
+    ul#main-menu li a {
+        border-radius: 0;
+        padding: 13px;
+    }
 }
