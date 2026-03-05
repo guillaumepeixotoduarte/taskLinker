@@ -20,12 +20,13 @@ final class ProjetController extends AbstractController
 
 
         return $this->render('projet/index.html.twig', [
-            'controller_name' => 'Projets',
+            'title' => 'Projets',
             'projets' => $projets,
         ]);
     }
 
     #[Route('/projet/add', name: 'app_projet_add')]
+    #[Route('/projet/edit/{id}', name: 'app_projet_edit')]
     public function add(?Projet $projet = null,Request $request, EntityManagerInterface $em): Response
     {
         if(!$projet){
@@ -36,7 +37,6 @@ final class ProjetController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em->persist($projet);
             $em->flush();
             $this->addFlash('success', 'Le projet a bien été créé');
@@ -45,9 +45,29 @@ final class ProjetController extends AbstractController
         }
 
         return $this->render('projet/add.html.twig', [
-            'controller_name' => 'ProjetController',
             'form' => $form->createView(),
             'projet' => $projet,
         ]);
+    }
+
+    #[Route('/projet/{id}', name: 'app_projet_details')]
+    public function details(Projet $projet): Response
+    {
+        return $this->render('projet/details.html.twig', [
+            'projet' => $projet,
+        ]);
+    }
+
+    #[Route('/projet/delete/{id}', name: 'app_projet_delete', methods: ['POST'])]
+    public function delete(Request $request, Projet $projet, EntityManagerInterface $em): Response
+    {    
+        if ($this->isCsrfTokenValid('delete' . $projet->getId(), $request->request->get('_token'))) {
+            $em->remove($projet);
+            $em->flush();
+            $this->addFlash('success', 'Projet supprimé avec succès.');   
+        }
+
+        return $this->redirectToRoute('app_projet_index');
+
     }
 }
