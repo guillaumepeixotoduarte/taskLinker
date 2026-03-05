@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EmployeController!{% endblock %}
+{% block title %}Modifier l'employé{% endblock %}
 
 {% block body %}
 <header>
@@ -35,6 +35,7 @@
                 {{ form_widget(form.statut, {'attr': {'class': ''}}) }}
             </div>
         </div>
+        <br>
         <button class="button button-submit">Enregistrer</button>
     {{ form_end(form) }}
 </div>

@@ -41,7 +41,7 @@
                         </a>
                         <form method="post" class="w-auto" action="{{ path('app_employe_delete', {id: employe.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?');" >
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ employe.id) }}">
-                            <button class="delete-team" type="submit">
+                            <button class="delete-team cursor-pointer" type="submit">
                                 Supprimer
                             </button>
                         </form>
