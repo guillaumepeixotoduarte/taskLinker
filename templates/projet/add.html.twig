@@ -17,12 +17,12 @@
 
     {{ form_start(form) }}
         <div>
-            {{ form_label(form.nom) }}
-            {{ form_widget(form.nom, {'attr': {'class': ''}}) }}
+            {{ form_label(form.titre) }}
+            {{ form_widget(form.titre, {'attr': {'class': ''}}) }}
         </div>
         <div>
-            {{ form_label(form.employe) }}
-            {{ form_widget(form.employe, {'attr': {'class': '', 'id': 'projet_employe'}}) }}
+            {{ form_label(form.employes) }}
+            {{ form_widget(form.employes, {'attr': {'class': '', 'id': 'projet_employes'}}) }}
         </div>
         <button class="button button-submit">Enregistrer</button>
     {{ form_end(form) }}
@@ -35,8 +35,16 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script>
-            $(document).ready(function() {
-                $('#projet_employe').select2();
+            document.addEventListener('turbo:load', function() {
+                console.log("Turbo a chargé la page, on initialise les composants !");
+
+                const selectElement = document.querySelector('#projet_employes');
+                
+                if (selectElement) {
+                    if (typeof jQuery !== 'undefined') {
+                        $(selectElement).select2();
+                    }
+                }
             });
         </script>
 {% endblock %}
