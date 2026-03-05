@@ -37,6 +37,8 @@ class TacheType extends AbstractType
             ])
             ->add('employe', EntityType::class, [
                 'class' => Employe::class,
+                'placeholder' => '--- Aucun membre assigné ---',
+                'required' => false,
                 'choice_label' => function (Employe $employe) {
                     return $employe->getPrenom() . ' ' . $employe->getNom();
                 },

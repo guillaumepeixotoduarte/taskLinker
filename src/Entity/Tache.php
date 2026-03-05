@@ -27,6 +27,7 @@ class Tache
     private ?string $statut = null;
 
     #[ORM\ManyToOne(inversedBy: 'taches')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Employe $employe = null;
 
     #[ORM\ManyToOne(inversedBy: 'taches')]

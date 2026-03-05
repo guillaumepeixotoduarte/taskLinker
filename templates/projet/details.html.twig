@@ -31,6 +31,11 @@
                             <div class="task-deadline">
                                 <i class="bi bi-calendar"></i> {{ tache.date ? tache.date|date('d/m/Y') : 'Pas de date' }}
                             </div>
+                            {% if tache.employe %}
+                                <div class="mini-user">
+                                    {{ tache.employe.prenom|slice(0, 1) }}{{ tache.employe.nom|slice(0, 1) }}
+                                </div>
+                            {% endif %}                                
                         </div>
                     </a>
                 {% endfor %}
@@ -50,6 +55,11 @@
                             <div class="task-deadline">
                                 <i class="bi bi-calendar"></i> {{ tache.date ? tache.date|date('d/m/Y') : 'Pas de date' }}
                             </div>
+                            {% if tache.employe %}
+                                <div class="mini-user">
+                                    {{ tache.employe.prenom|slice(0, 1) }}{{ tache.employe.nom|slice(0, 1) }}
+                                </div>
+                            {% endif %}  
                         </div>
                     </a>
                 {% endfor %}
@@ -69,6 +79,11 @@
                             <div class="task-deadline">
                                 <i class="bi bi-calendar"></i> {{ tache.date ? tache.date|date('d/m/Y') : 'Pas de date' }}
                             </div>
+                            {% if tache.employe %}
+                                <div class="mini-user">
+                                    {{ tache.employe.prenom|slice(0, 1) }}{{ tache.employe.nom|slice(0, 1) }}
+                                </div>
+                            {% endif %}  
                         </div>
                     </a>
                 {% endfor %}
