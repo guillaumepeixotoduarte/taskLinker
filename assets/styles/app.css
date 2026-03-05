@@ -15,6 +15,10 @@ html, body {
     width: auto;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 .sf-toolbar {
     position: fixed;
 }
@@ -315,6 +319,15 @@ a.task-add {
     margin-top: 25px;
     display: block;
     margin-left: 18px;
+}
+
+.delete-task{
+    color: #E14343;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    display: block;
+    margin-top: 20px;
 }
 
 table#team-container {
