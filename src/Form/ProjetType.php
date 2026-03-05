@@ -15,13 +15,10 @@ class ProjetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', TextType::class, [
-                'label' => 'Nom du projet',
+            ->add('titre', TextType::class, [
+                'label' => 'Titre du projet',
             ])
-            // ->add('date_debut')
-            // ->add('deadline')
-            // ->add('archive')
-            ->add('employe', EntityType::class, [
+            ->add('employes', EntityType::class, [
                 'class' => Employe::class,
                 'choice_label' => 'nom',
                 'multiple' => true,

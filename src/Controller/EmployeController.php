@@ -26,8 +26,6 @@ final class EmployeController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $employe = $employe->setPassword(password_hash($employe->getPassword(), PASSWORD_BCRYPT));
-            $employe->setRoles($employe->isChef() ? ['ROLE_CHEF'] : ['ROLE_EMPLOYE']);
             $em->persist($employe);
             $em->flush();
             $this->addFlash('success', 'L\'employé a bien été créé');

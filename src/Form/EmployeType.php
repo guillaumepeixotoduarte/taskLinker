@@ -27,8 +27,8 @@ class EmployeType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'Email',
             ])
-            ->add('contrat', ChoiceType::class, [
-                'label' => 'Contrat',
+            ->add('statut', ChoiceType::class, [
+                'label' => 'Statut',
                 'choices' => [
                     'CDI' => 'CDI',
                     'CDD' => 'CDD',
@@ -36,27 +36,11 @@ class EmployeType extends AbstractType
                     'Stage' => 'Stage',
                 ],
             ])
-            ->add('dateArrive', DateType::class, [
+            ->add('dateEntree', DateType::class, [
                 'widget' => 'single_text',
-                'label' => 'Date d\'arrivée',
+                'label' => 'Date d\'entrée',
             ])
         ;
-
-        if(!$options['is_edit']){
-            $builder
-                ->add('password', PasswordType::class, [
-                    'label' => 'Mot de passe',
-                ])
-                ->add('isChef', CheckboxType::class, [
-                    'label' => 'Chef',
-                    'required' => false,
-                ])
-                ->add('compteActif', CheckboxType::class, [
-                    'label' => 'Compte Actif',
-                    'required' => false,
-                ]);
-                
-        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
