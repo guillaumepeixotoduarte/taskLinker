@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TacheController!{% endblock %}
+
+{% block body %}
+    <header>
+        <div id="current-user"></div>
+        <div id="title-page">
+            <h1>{% if tache is defined %}{{ tache.titre }}{% else %}Créer une tâche{% endif %}</h1>
+        </div>
+    </header>
+
+    <div id="content">
+        {{ form_start(form) }}
+            <div>
+                {{ form_label(form.titre) }}
+                {{ form_widget(form.titre, {'attr': {'class': ''}}) }}
+            </div>
+            <div>
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description, {'attr': {'class': ''}}) }}
+            </div>
+            <div>
+                {{ form_label(form.date) }}
+                {{ form_widget(form.date, {'attr': {'class': ''}}) }}
+            </div>
+            <div>
+                {{ form_label(form.statut) }}
+                {{ form_widget(form.statut, {'attr': {'class': ''}}) }}
+            </div>
+            <div>
+                {{ form_label(form.employe) }}
+                {{ form_widget(form.employe, {'attr': {'class': ''}}) }}
+            </div>
+            <br>
+            <button class="button button-submit">{% if tache is defined %}Modifier{% else %}Enregistrer{% endif %}</button>
+        {{ form_end(form) }}
+
+        {% if tache is defined %}
+            <form method="post" class="delete-task" action="{{ path('app_tache_delete', {id: tache.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?');" >
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ tache.id) }}">
+                <button class="delete-team cursor-pointer" type="submit">
+                    Supprimer la tâche
+                </button>
+            </form>
+        {% endif %}
+
+    </div>
+{% endblock %}
