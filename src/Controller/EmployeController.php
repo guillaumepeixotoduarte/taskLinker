@@ -12,14 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class EmployeController extends AbstractController
 {
-    #[Route('/employe/add', name: 'app_employe_add')]
     #[Route('/employe/edit/{id}', name: 'app_employe_edit')]
-    public function index(?Employe $employe = null,Request $request, EntityManagerInterface $em): Response
-    {
-        if(!$employe){
-            $employe = new Employe();
-        }
-        
+    public function index(Employe $employe,Request $request, EntityManagerInterface $em): Response
+    {        
         $form = $this->createForm(EmployeType::class, $employe, [
             'is_edit' => $employe->getId() !== null,
         ]);
