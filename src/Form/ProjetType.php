@@ -20,7 +20,9 @@ class ProjetType extends AbstractType
             ])
             ->add('employes', EntityType::class, [
                 'class' => Employe::class,
-                'choice_label' => 'nom',
+                'choice_label' => function (Employe $employe) {
+                    return $employe->getPrenom() . ' ' . $employe->getNom();
+                },
                 'multiple' => true,
                 'label' => 'Inviter des membres'
             ])
