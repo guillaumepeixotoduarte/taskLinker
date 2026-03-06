@@ -30,6 +30,9 @@ class Projet
     #[ORM\OneToMany(targetEntity: Tache::class, mappedBy: 'projet')]
     private Collection $taches;
 
+    #[ORM\Column]
+    private ?bool $archive = null;
+
     public function __construct()
     {
         $this->employes = new ArrayCollection();
@@ -103,6 +106,18 @@ class Projet
                 $tach->setProjet(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isArchive(): ?bool
+    {
+        return $this->archive;
+    }
+
+    public function setArchive(bool $archive): static
+    {
+        $this->archive = $archive;
 
         return $this;
     }
