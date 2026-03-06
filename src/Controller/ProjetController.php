@@ -16,7 +16,7 @@ final class ProjetController extends AbstractController
     #[Route('/', name: 'app_projet_index')]
     public function index(EntityManagerInterface $em): Response
     {
-        $projets = $em->getRepository(Projet::class)->findAll();
+        $projets = $em->getRepository(Projet::class)->findBy(['archive' => false]);
 
 
         return $this->render('projet/index.html.twig', [
@@ -37,6 +37,7 @@ final class ProjetController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $projet->setArchive(false);
             $em->persist($projet);
             $em->flush();
             $this->addFlash('success', 'Le projet a bien été créé');
@@ -58,13 +59,13 @@ final class ProjetController extends AbstractController
         ]);
     }
 
-    #[Route('/projet/delete/{id}', name: 'app_projet_delete', methods: ['POST'])]
-    public function delete(Request $request, Projet $projet, EntityManagerInterface $em): Response
+    #[Route('/projet/archive/{id}', name: 'app_projet_archive', methods: ['POST'])]
+    public function archive(Request $request, Projet $projet, EntityManagerInterface $em): Response
     {    
-        if ($this->isCsrfTokenValid('delete' . $projet->getId(), $request->request->get('_token'))) {
-            $em->remove($projet);
+        if ($this->isCsrfTokenValid('archive' . $projet->getId(), $request->request->get('_token'))) {
+            $projet->setArchive(true);
             $em->flush();
-            $this->addFlash('success', 'Projet supprimé avec succès.');   
+            $this->addFlash('success', 'Projet archivé avec succès.');   
         }
 
         return $this->redirectToRoute('app_projet_index');

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProjetController!{% endblock %}
+{% block title %}{{ projet.titre }}{% endblock %}
 
 {% block body %}
 <header>
@@ -74,7 +74,7 @@
                 {% for tache in projet.taches|filter(tache => tache.statut == 'TERMINE') %}
                     <a class="task" href="{{ path('app_tache_edit', {'id': tache.id}) }}">
                         <h3>{{ tache.titre }}</h3>
-                        <p>{{ tache.description }}</p>
+                        <p>{{ tache.description ?? '' }}</p>
                         <div class="task-infos">
                             <div class="task-deadline">
                                 <i class="bi bi-calendar"></i> {{ tache.date ? tache.date|date('d/m/Y') : 'Pas de date' }}

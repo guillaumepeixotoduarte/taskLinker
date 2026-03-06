@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TacheController!{% endblock %}
+{% block title %}{% if tache is defined %}Modifier {{ tache.titre }}{% else %}Créer une tâche{% endif %}{% endblock %}
 
 {% block body %}
     <header>
@@ -15,22 +15,27 @@
             <div>
                 {{ form_label(form.titre) }}
                 {{ form_widget(form.titre, {'attr': {'class': ''}}) }}
+                {{ form_errors(form.titre) }}
             </div>
             <div>
                 {{ form_label(form.description) }}
                 {{ form_widget(form.description, {'attr': {'class': ''}}) }}
+                {{ form_errors(form.description) }}
             </div>
             <div>
                 {{ form_label(form.date) }}
                 {{ form_widget(form.date, {'attr': {'class': ''}}) }}
+                {{ form_errors(form.date) }}
             </div>
             <div>
                 {{ form_label(form.statut) }}
                 {{ form_widget(form.statut, {'attr': {'class': ''}}) }}
+                {{ form_errors(form.statut) }}
             </div>
             <div>
                 {{ form_label(form.employe) }}
                 {{ form_widget(form.employe, {'attr': {'class': ''}}) }}
+                {{ form_errors(form.employe) }}
             </div>
             <br>
             <button class="button button-submit">{% if tache is defined %}Modifier{% else %}Enregistrer{% endif %}</button>
