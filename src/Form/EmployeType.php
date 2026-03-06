@@ -34,6 +34,7 @@ class EmployeType extends AbstractType
                     'CDD' => 'CDD',
                     'Intérim' => 'Intérim',
                     'Stage' => 'Stage',
+                    'Freelance' => 'Freelance',
                 ],
             ])
             ->add('dateEntree', DateType::class, [

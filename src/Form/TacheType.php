@@ -17,15 +17,23 @@ class TacheType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // On récupère l'objet Tache en cours
+        $tache = $options['data'] ?? null;
+        // On récupère le projet lié à cette tâche
+        $projet = $tache ? $tache->getProjet() : null;
+
         $builder
             ->add('titre', TextType::class, [
                 'label' => 'Titre de la tâche',
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
+                'required' => false,
             ])
-            ->add('date', DateType::class, [
+            ->add('date', null, [
                 'label' => 'Date',
+                'widget' => 'single_text',
+                'required' => false,
             ])
             ->add('statut', ChoiceType::class, [
                 'label' => 'Statut',
@@ -37,6 +45,7 @@ class TacheType extends AbstractType
             ])
             ->add('employe', EntityType::class, [
                 'class' => Employe::class,
+                'choices' => $projet ? $projet->getEmployes()->toArray() : [],
                 'placeholder' => '--- Aucun membre assigné ---',
                 'required' => false,
                 'choice_label' => function (Employe $employe) {

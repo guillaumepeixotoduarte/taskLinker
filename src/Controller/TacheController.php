@@ -18,12 +18,12 @@ final class TacheController extends AbstractController
     {
         $projet = $em->getRepository(Projet::class)->find($projetId);
         $tache = new Tache();
-
+        $tache->setProjet($projet); // Associez la tâche au projet
+        
         $form = $this->createForm(TacheType::class, $tache);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $tache->setProjet($projet); // Associez la tâche au projet
             $em->persist($tache);
             $em->flush();
             $this->addFlash('success', 'La tâche a bien été créée');
