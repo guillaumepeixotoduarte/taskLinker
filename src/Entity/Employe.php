@@ -7,9 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: EmployeRepository::class)]
-class Employe
+class Employe implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,7 +24,7 @@ class Employe
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -43,6 +45,12 @@ class Employe
     #[ORM\ManyToMany(targetEntity: Projet::class, mappedBy: 'employes')]
     private Collection $projets;
 
+    #[ORM\Column]
+    private array $roles = [];
+
+    #[ORM\Column(length: 255)]
+    private ?string $password = null;
+
     public function __construct()
     {
         $this->taches = new ArrayCollection();
@@ -62,7 +70,6 @@ class Employe
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -74,7 +81,6 @@ class Employe
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
-
         return $this;
     }
 
@@ -86,7 +92,6 @@ class Employe
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -98,7 +103,6 @@ class Employe
     public function setDateEntree(\DateTime $date_entree): static
     {
         $this->date_entree = $date_entree;
-
         return $this;
     }
 
@@ -110,13 +114,51 @@ class Employe
     public function setStatut(string $statut): static
     {
         $this->statut = $statut;
+        return $this;
+    }
 
+    // --- SÉCURITÉ : MÉTHODES OBLIGATOIRES ---
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER'; // Garantit au moins ce rôle
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
         return $this;
     }
 
     /**
-     * @return Collection<int, Tache>
+     * Cette méthode sert à effacer des données sensibles (ex: mot de passe en clair)
+     * stockées temporairement dans l'objet.
      */
+    public function eraseCredentials(): void
+    {
+        // $this->plainPassword = null;
+    }
+
+    // --- RELATIONS ---
+
     public function getTaches(): Collection
     {
         return $this->taches;
@@ -128,25 +170,19 @@ class Employe
             $this->taches->add($tach);
             $tach->setEmploye($this);
         }
-
         return $this;
     }
 
     public function removeTach(Tache $tach): static
     {
         if ($this->taches->removeElement($tach)) {
-            // set the owning side to null (unless already changed)
             if ($tach->getEmploye() === $this) {
                 $tach->setEmploye(null);
             }
         }
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, Projet>
-     */
     public function getProjets(): Collection
     {
         return $this->projets;
@@ -158,7 +194,6 @@ class Employe
             $this->projets->add($projet);
             $projet->addEmploye($this);
         }
-
         return $this;
     }
 
@@ -167,7 +202,6 @@ class Employe
         if ($this->projets->removeElement($projet)) {
             $projet->removeEmploye($this);
         }
-
         return $this;
     }
 }
