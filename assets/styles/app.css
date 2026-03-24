@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 html, body {
     margin: 0;
@@ -11,17 +14,11 @@ html, body {
     font-family: 'Manrope', sans-serif;
 }
 
-.w-auto{
-    width: auto;
-}
-
-.cursor-pointer {
-    cursor: pointer;
-}
-
 .sf-toolbar {
     position: fixed;
 }
+
+/* Base Styles */
 
 div#main-container {
     display: flex;
@@ -90,6 +87,36 @@ header {
     background: #4D8077;
     height: 155px;
     padding: 30px 80px 10px 80px;
+}
+
+/* Auth Container */
+
+.auth-container {
+    background: url('../images/background-auth.jpg') center bottom #1C5B50;
+    background-size: cover;
+    flex: 1;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-title {
+    position: absolute;
+    top: 52px;
+    left: 52px;
+    margin: 0px;
+}
+
+.auth-content{
+    margin: auto;
+    width: 710px;
+    border-radius: 30px;
+    background: #4D8077;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 div#current-user {
@@ -512,12 +539,12 @@ form .select2-container--default .select2-selection--multiple .select2-selection
         width: 150px;
         padding: 50px 10px;
     }
-    
+
     #logo img {
         width: 100px;
         margin-bottom: 35px;
     }
-    
+
     ul#main-menu li a {
         padding: 10px;
         gap: 20px;
@@ -532,18 +559,18 @@ form .select2-container--default .select2-selection--multiple .select2-selection
     div#content {
         padding: 30px;
     }
-    
+
     nav {
         width: 50px;
         padding-left: 0;
         padding-right: 0;
         padding-top: 20px;
     }
-    
+
     #logo {
         display: none;
     }
-    
+
     ul#main-menu li a {
         border-radius: 0;
         padding: 13px;
