@@ -1,0 +1,26 @@
+{# templates/home/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="auth-container">
+    <div class="auth-title">
+        <img src="{{ asset('/images/logo.png') }}" alt="Logo TaskLinker" />
+    </div>
+    <div class="auth-content px-20 pb-20 pt-32">
+        <h1 class="text-white text-[34px]">Bienvenue sur TaskLinker</h1>
+        <h3 class="text-white text-[22px] mt-6">Commencez dès maintenant - gratuitement</h3>
+        <p class="text-white text-[18px] mt-20">Vous avez déjà un compte ?</p>
+        <a href="{{ path('app_login') }}" class="mt-[30px] w-56 h-[74px] flex justify-center items-center bg-[#1C5B50] text-[14px] text-white rounded-xl">Se connecter</a>
+        <div class="flex items-center gap-4 my-6">
+            <hr class="w-[140px] border-gray-300">
+            <p class="text-white text-[18px]">ou</p>
+            <hr class="w-[140px] border-gray-300">
+        </div>
+        <a href="{{ path('app_register') }}" class="w-56 h-[74px] bg-[#B1D89D] flex justify-center items-center text-[14px] text-white rounded-xl">S'inscrire</a>
+    </div>
+
+
+    {# <a href="{{ path('app_login') }}">Se connecter</a>
+    <a href="{{ path('app_register') }}">S'inscrire</a> #}
+</div>
+{% endblock %}
