@@ -1,0 +1,6 @@
+# config/packages/symfonycasts_tailwind.yaml
+symfonycasts_tailwind:
+    # On indique explicitement où se trouve le fichier CSS source
+    input_css: 'assets/styles/app.css'
+    # On peut forcer la version ici si l'auto-détection échoue
+    # binary: 'https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-windows-x64.exe'
