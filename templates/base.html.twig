@@ -42,6 +42,18 @@
                 </nav>
             {% endif %}
             <main>
+                {% if app.request.attributes.get('_route') not in hideMenuRoutes %}
+                    <header>
+                        <div id="current-user">
+                            {% if app.user %}
+                                {{ app.user.prenom }} {{ app.user.nom }}
+                            {% endif %}
+                        </div>
+                        <div id="title-page">
+                            {% block header %}{% endblock %}
+                        </div>
+                    </header>
+                {% endif %}
                 {% block body %}{% endblock %}
             </main>
         </div>

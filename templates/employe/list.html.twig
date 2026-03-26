@@ -2,13 +2,11 @@
 
 {% block title %}Liste des employés{% endblock %}
 
+{% block header %}
+    <h1>Equipe</h1>
+{% endblock %}
+
 {% block body %}
-<header>
-    <div id="current-user"></div>
-    <div id="title-page">
-        <h1>Equipe</h1>
-    </div>
-</header>
 
 <div id="content">
 
@@ -17,7 +15,9 @@
             <tr>
                 <th>Prénom, Nom</th>
                 <th>Statut</th>
-                <th>Actions</th>
+                {% if is_granted('ROLE_CHEF_PROJET') %}
+                    <th class="last-column">Actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -35,17 +35,19 @@
                         </div>
                     </td>
                     <td>{{ employe.statut }}</td>
-                    <td>
-                        <a class="button button-edit-team" href="{{ path('app_employe_edit', {'id': employe.id}) }}">
-                            Éditer
-                        </a>
-                        <form method="post" class="w-auto" action="{{ path('app_employe_delete', {id: employe.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?');" >
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ employe.id) }}">
-                            <button class="delete-team cursor-pointer" type="submit">
-                                Supprimer
-                            </button>
-                        </form>
-                    </td>
+                    {% if is_granted('ROLE_CHEF_PROJET') %}
+                        <td class="last-column">
+                            <a class="button button-edit-team" href="{{ path('app_employe_edit', {'id': employe.id}) }}">
+                                Éditer
+                            </a>
+                            <form method="post" class="w-auto" action="{{ path('app_employe_delete', {id: employe.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?');" >
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ employe.id) }}">
+                                <button class="delete-team cursor-pointer" type="submit">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>

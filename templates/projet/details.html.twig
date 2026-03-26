@@ -2,21 +2,21 @@
 
 {% block title %}{{ projet.titre }}{% endblock %}
 
-{% block body %}
-<header>
-    <div id="current-user"></div>
-    <div id="title-page">
-        <div class="flex-header">
-            <h1>{{ projet.titre }}</h1>
-            <div class="user-list">
-                {% for employe in projet.employes %}
-                    <div class="avatar">{{ employe.prenom|slice(0, 1) }}{{ employe.nom|slice(0, 1) }}</div>
-                {% endfor %}
-            </div>
-            <a class="button" href="{{ path('app_projet_edit', {'id': projet.id}) }}">Modifier</a>
+{% block header %}
+    <div class="flex-header">
+        <h1>{{ projet.titre }}</h1>
+        <div class="user-list">
+            {% for employe in projet.employes %}
+                <div class="avatar">{{ employe.prenom|slice(0, 1) }}{{ employe.nom|slice(0, 1) }}</div>
+            {% endfor %}
         </div>
+        {% if is_granted('ROLE_CHEF_PROJET') %}
+            <a class="button" href="{{ path('app_projet_edit', {'id': projet.id}) }}">Modifier</a>
+        {% endif %}
     </div>
-</header>
+{% endblock %}
+
+{% block body %}
 
 <div id="content">
     <div id="tasks-container">
@@ -35,7 +35,7 @@
                                 <div class="mini-user">
                                     {{ tache.employe.prenom|slice(0, 1) }}{{ tache.employe.nom|slice(0, 1) }}
                                 </div>
-                            {% endif %}                                
+                            {% endif %}
                         </div>
                     </a>
                 {% endfor %}
@@ -59,7 +59,7 @@
                                 <div class="mini-user">
                                     {{ tache.employe.prenom|slice(0, 1) }}{{ tache.employe.nom|slice(0, 1) }}
                                 </div>
-                            {% endif %}  
+                            {% endif %}
                         </div>
                     </a>
                 {% endfor %}
@@ -83,7 +83,7 @@
                                 <div class="mini-user">
                                     {{ tache.employe.prenom|slice(0, 1) }}{{ tache.employe.nom|slice(0, 1) }}
                                 </div>
-                            {% endif %}  
+                            {% endif %}
                         </div>
                     </a>
                 {% endfor %}

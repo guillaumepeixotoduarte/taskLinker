@@ -5,13 +5,11 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
 
+{% block header %}
+    <h1>{% if projet.titre != '' %} {{ projet.titre }} {% else %} Nouveau projet{% endif %}</h1>
+{% endblock %}
+
 {% block body %}
-<header>
-    <div id="current-user"></div>
-    <div id="title-page">
-        <h1>{% if projet.titre != '' %} {{ projet.titre }} {% else %} Nouveau projet{% endif %}</h1>
-    </div>
-</header>
 
 <div id="content">
 
@@ -40,7 +38,7 @@
                 console.log("Turbo a chargé la page, on initialise les composants !");
 
                 const selectElement = document.querySelector('#projet_employes');
-                
+
                 if (selectElement) {
                     if (typeof jQuery !== 'undefined') {
                         $(selectElement).select2();

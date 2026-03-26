@@ -3,32 +3,54 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
-        <h1 class="text-2xl font-bold mb-6">Rejoindre TaskLinker</h1>
 
-        {{ form_start(registrationForm) }}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {{ form_row(registrationForm.nom) }}
-                {{ form_row(registrationForm.prenom) }}
-            </div>
 
-            {{ form_row(registrationForm.email) }}
+    <div class="auth-container">
+        <div class="auth-title">
+            <img src="{{ asset('/images/logo.png') }}" alt="Logo TaskLinker" />
+        </div>
+        <div class="auth-content p-10">
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                {{ form_row(registrationForm.date_entree) }}
-                {{ form_row(registrationForm.statut) }}
-            </div>
+            {{ form_start(registrationForm) }}
 
-            <div class="bg-blue-50 p-4 rounded mt-4">
-                {{ form_row(registrationForm.isChefProjet) }}
-            </div>
+                <h1 class="text-white text-[34px] font-bold text-center mb-10">Se connecter</h1>
 
-            {{ form_row(registrationForm.plainPassword) }}
-            {{ form_row(registrationForm.agreeTerms) }}
+                <div class="mb-4">
+                    {{ form_label(registrationForm.nom, null, {'label_attr': {'class': 'block text-white mb-2'}}) }}
+                    {{ form_widget(registrationForm.nom, {'attr': {'class': 'w-full p-2 rounded'}}) }}
+                    {{ form_errors(registrationForm.nom) }}
+                </div>
 
-            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded mt-6 hover:bg-blue-700">
-                Créer mon compte
-            </button>
-        {{ form_end(registrationForm) }}
+                <div class="mb-4">
+                    {{ form_label(registrationForm.prenom, null, {'label_attr': {'class': 'block text-white mb-2'}}) }}
+                    {{ form_widget(registrationForm.prenom, {'attr': {'class': 'w-full p-2 rounded'}}) }}
+                    {{ form_errors(registrationForm.prenom) }}
+                </div>
+
+                <div class="mb-4">
+                    {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'block text-white mb-2'}}) }}
+                    {{ form_widget(registrationForm.email, {'attr': {'class': 'w-full p-2 rounded'}}) }}
+                    {{ form_errors(registrationForm.email) }}
+                </div>
+
+                <div class="mb-4">
+                    {{ form_label(registrationForm.plainPassword.first, null, {'label_attr': {'class': 'block text-white mb-2'}}) }}
+                    {{ form_widget(registrationForm.plainPassword.first) }}
+
+                    <div class="mt-4">
+                        {{ form_label(registrationForm.plainPassword.second, null, {'label_attr': {'class': 'block text-white mb-2'}}) }}
+                        {{ form_widget(registrationForm.plainPassword.second) }}
+                    </div>
+                </div>
+
+
+                <button class="mt-8 w-full py-[25px] text-white bg-[#1C5B50] text-[14px] rounded-xl" type="submit">
+                    Continuer
+                </button>
+                <a class="text-white text-center mt-4 text-[14px] flex justify-center" href="{{ path('app_login') }}">
+                    Vous avez déjà un compte ?
+                </a>
+            {{ form_end(registrationForm) }}
+        </div>
     </div>
 {% endblock %}

@@ -2,13 +2,11 @@
 
 {% block title %}{% if tache is defined %}Modifier {{ tache.titre }}{% else %}Créer une tâche{% endif %}{% endblock %}
 
+{% block header %}
+    <h1>{% if tache is defined %}{{ tache.titre }}{% else %}Créer une tâche{% endif %}</h1>
+{% endblock %}
+
 {% block body %}
-    <header>
-        <div id="current-user"></div>
-        <div id="title-page">
-            <h1>{% if tache is defined %}{{ tache.titre }}{% else %}Créer une tâche{% endif %}</h1>
-        </div>
-    </header>
 
     <div id="content">
         {{ form_start(form) }}

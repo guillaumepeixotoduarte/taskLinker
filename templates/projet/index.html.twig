@@ -2,13 +2,11 @@
 
 {% block title %}Projets{% endblock %}
 
+{% block header %}
+    <h1>{{ title }}</h1>
+{% endblock %}
+
 {% block body %}
-<header>
-    <div id="current-user"></div>
-    <div id="title-page">
-        <h1>{{ title }}</h1>
-    </div>
-</header>
 
 <div id="content">
     <div id="projects-container">
@@ -30,12 +28,14 @@
                 </div>
             </article>
         {% endfor %}
-        <article class="card-project">
-            <a href="{{ path('app_projet_add') }}">
-                <i class="bi bi-plus-circle-fill add-project-icon"></i>
-                <h2 class="fw-semibold">Ajouter un projet</h2>
-            </a>
-        </article>
+        {% if is_granted('ROLE_CHEF_PROJET') %}
+            <article class="card-project">
+                <a href="{{ path('app_projet_add') }}">
+                    <i class="bi bi-plus-circle-fill add-project-icon"></i>
+                    <h2 class="fw-semibold">Ajouter un projet</h2>
+                </a>
+            </article>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
