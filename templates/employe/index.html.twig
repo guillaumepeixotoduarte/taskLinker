@@ -3,9 +3,9 @@
 {% block title %}Modifier l'employé{% endblock %}
 
 {% block header %}
-
-{% endblock %}
     <h1>{{employe.prenom}} {{employe.nom}}</h1>
+{% endblock %}
+
 {% block body %}
 
 <div id="content">
@@ -33,6 +33,11 @@
                 {{ form_widget(form.statut, {'attr': {'class': ''}}) }}
             </div>
         </div>
+        <div>
+            {{ form_label(form.roles) }}
+            {{ form_widget(form.roles, {'attr': {'class': ''}}) }}
+        </div>
+
         <button class="button button-submit">Enregistrer</button>
     {{ form_end(form) }}
 </div>

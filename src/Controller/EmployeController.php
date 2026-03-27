@@ -9,12 +9,14 @@ use App\Entity\Employe;
 use App\Form\EmployeType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class EmployeController extends AbstractController
 {
     #[Route('/employe/edit/{id}', name: 'app_employe_edit')]
+    #[IsGranted('ROLE_CHEF_PROJET')]
     public function index(Employe $employe,Request $request, EntityManagerInterface $em): Response
-    {        
+    {
         $form = $this->createForm(EmployeType::class, $employe, [
             'is_edit' => $employe->getId() !== null,
         ]);
@@ -25,7 +27,7 @@ final class EmployeController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'L\'employé a bien été créé');
             return $this->redirectToRoute('app_employe_list');
-            
+
         }
 
         return $this->render('employe/index.html.twig', [
@@ -45,6 +47,7 @@ final class EmployeController extends AbstractController
     }
 
     #[Route('/employe/delete/{id}', name: 'app_employe_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_CHEF_PROJET')]
     public function delete(Request $request, Employe $employe, EntityManagerInterface $em): Response
     {
     if ($this->isCsrfTokenValid('delete' . $employe->getId(), $request->request->get('_token'))) {
