@@ -23,18 +23,20 @@ class RegistrationController extends AbstractController
         AppCustomAuthenticator $authenticator,
         EntityManagerInterface $entityManager
     ): Response {
+
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_projet');
+        }
+
         $user = new Employe();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // 1. On récupère les données du champ non-mappé (le rôle)
-            $isChef = $form->get('isChefProjet')->getData();
-            if ($isChef === 'CHEF') {
-                $user->setRoles(['ROLE_CHEF_PROJET']);
-            } else {
-                $user->setRoles(['ROLE_USER']);
-            }
+            $user->setRoles(['ROLE_USER']);
+            $user->setDateEntree(new \DateTime()); // Par défaut on mettra la date de création du compte comme date d'entrée
+            $user->setStatut(""); // Aucune valeur par défaut
 
             // 2. On hache le mot de passe (champ non-mappé plainPassword)
             $user->setPassword(
