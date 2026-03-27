@@ -2,22 +2,32 @@
 
 namespace App\Controller;
 
+use App\Entity\Employe;
 use App\Entity\Projet;
 use App\Form\ProjetType;
+use App\Repository\ProjetRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class ProjetController extends AbstractController
 {
     #[Route('/projet', name: 'app_projet')]
-    #[Route('/', name: 'app_projet_index')]
     public function index(EntityManagerInterface $em): Response
     {
-        $projets = $em->getRepository(Projet::class)->findBy(['archive' => false]);
+        $user = $this->getUser();
+        $repository = $em->getRepository(Projet::class);
 
+        // Si c'est un Chef de Projet, il récupère TOUT
+        if ($this->isGranted('ROLE_CHEF_PROJET')) {
+            $projets = $repository->findAll();
+        } else {
+            // Sinon, on filtre pour l'employé connecté
+            $projets = $repository->findAllActiveForUser($user);
+        }
 
         return $this->render('projet/index.html.twig', [
             'title' => 'Projets',
@@ -27,12 +37,13 @@ final class ProjetController extends AbstractController
 
     #[Route('/projet/add', name: 'app_projet_add')]
     #[Route('/projet/edit/{id}', name: 'app_projet_edit')]
+    #[IsGranted('ROLE_CHEF_PROJET')]
     public function add(?Projet $projet = null,Request $request, EntityManagerInterface $em): Response
     {
         if(!$projet){
             $projet = new Projet();
         }
-        
+
         $form = $this->createForm(ProjetType::class, $projet);
 
         $form->handleRequest($request);
@@ -42,7 +53,7 @@ final class ProjetController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'Le projet a bien été créé');
             return $this->redirectToRoute('app_projet_details', ['id' => $projet->getId()]);
-            
+
         }
 
         return $this->render('projet/add.html.twig', [
@@ -52,23 +63,33 @@ final class ProjetController extends AbstractController
     }
 
     #[Route('/projet/{id}', name: 'app_projet_details')]
-    public function details(Projet $projet): Response
+    public function details(Projet $projet, ProjetRepository $projetRepo): Response
     {
+        /** @var Employe $user */
+        $user = $this->getUser();
+
+        $isLinked = $projetRepo->isUserLinkedToProjet($projet->getId(), $user->getId());
+
+        if (!$this->isGranted('ROLE_CHEF_PROJET') && !$isLinked) {
+            return $this->redirectToRoute('app_projet');
+        }
+
         return $this->render('projet/details.html.twig', [
             'projet' => $projet,
         ]);
     }
 
     #[Route('/projet/archive/{id}', name: 'app_projet_archive', methods: ['POST'])]
+    #[IsGranted('ROLE_CHEF_PROJET')]
     public function archive(Request $request, Projet $projet, EntityManagerInterface $em): Response
-    {    
+    {
         if ($this->isCsrfTokenValid('archive' . $projet->getId(), $request->request->get('_token'))) {
             $projet->setArchive(true);
             $em->flush();
-            $this->addFlash('success', 'Projet archivé avec succès.');   
+            $this->addFlash('success', 'Projet archivé avec succès.');
         }
 
-        return $this->redirectToRoute('app_projet_index');
+        return $this->redirectToRoute('app_projet');
 
     }
 }
