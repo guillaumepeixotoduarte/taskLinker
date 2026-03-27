@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Employe;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
@@ -10,13 +11,13 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
  */
 final class EmployeFactory extends PersistentProxyObjectFactory
 {
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
-     *
-     * @todo inject services if required
-     */
-    public function __construct()
+
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
+        parent::__construct();
+        $this->passwordHasher = $passwordHasher;
     }
 
     #[\Override]
@@ -39,6 +40,9 @@ final class EmployeFactory extends PersistentProxyObjectFactory
             'nom' => self::faker()->lastName(),
             'prenom' => self::faker()->firstName(),
             'statut' => self::faker()->randomElement(['CDI', 'CDD', 'Freelance', 'Stagiaire']),
+            // On définit un mot de passe par défaut en clair ici
+            'password' => 'password',
+            'roles' => ['ROLE_USER'],
         ];
     }
 
@@ -49,7 +53,11 @@ final class EmployeFactory extends PersistentProxyObjectFactory
     protected function initialize(): static
     {
         return $this
-            // ->afterInstantiate(function(Employe $employe): void {})
+            ->afterInstantiate(function(Employe $employe): void {
+                // On récupère le mot de passe en clair et on le hache
+                $plainPassword = $employe->getPassword();
+                $employe->setPassword($this->passwordHasher->hashPassword($employe, $plainPassword));
+            })
         ;
     }
 }
