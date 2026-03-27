@@ -43,13 +43,29 @@
             {% endif %}
             <main>
                 {% if app.request.attributes.get('_route') not in hideMenuRoutes %}
-                    <header>
-                        <div id="current-user">
+                    <header class="flex flex-col text-white">
+                        <div id="current-user" class="relative" data-controller="dropdown" data-action="click@window->dropdown#close">
                             {% if app.user %}
-                                {{ app.user.prenom }} {{ app.user.nom }}
+                                <button type="button" data-action="dropdown#toggle" id="user-menu-button" class="focus:outline-none block ms-auto">
+                                    <div class="avatar-reverse cursor-pointer hover:opacity-80 transition-opacity">
+                                        {{ app.user.prenom|slice(0, 1) }}{{ app.user.nom|slice(0, 1) }}
+                                    </div>
+                                </button>
+
+                                <div id="user-menu-dropdown" data-dropdown-target="menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 z-50 overflow-hidden">
+                                    <div class="px-4 py-2 text-xs text-gray-400 bg-gray-50 border-b">
+                                        {{ app.user.prenom }} {{ app.user.nom }}
+                                    </div>
+                                    <a href="{{ path('app_logout') }}" class="flex items-center px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                        </svg>
+                                        Déconnexion
+                                    </a>
+                                </div>
                             {% endif %}
                         </div>
-                        <div id="title-page">
+                        <div id="title-page" class="flex-grow">
                             {% block header %}{% endblock %}
                         </div>
                     </header>

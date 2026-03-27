@@ -224,6 +224,20 @@ div#projects-container {
     margin-left: -12px;
     background: #1C5B50;
     border: 1px solid lightgray;
+    text-transform: uppercase;
+}
+
+.avatar-reverse{
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1C5B50;
+    background: #FFFFFF;
+    border: 1px solid #1C5B50;
+    text-transform: uppercase;
 }
 
 .user-list {
@@ -413,7 +427,7 @@ table#team-container tr td {
     color: #202020;
 }
 
-table#team-container tbody tr td:last-child {
+table#team-container tbody tr td.last-column {
     display: flex;
     align-items: center;
     gap: 35px;
@@ -437,7 +451,7 @@ a.delete-team, button.delete-team {
     text-decoration: underline;
 }
 
-table#team-container thead tr th:last-child {
+table#team-container thead tr th.last-column {
     max-width: 315px;
     width: 315px;
 }

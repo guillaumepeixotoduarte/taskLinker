@@ -29,13 +29,13 @@ security:
             logout:
                 path: app_logout
                 # Où rediriger après la déconnexion
-                target: app_login
+                target: app_home
 
             # Permet de se souvenir de l'utilisateur (optionnel)
-            remember_me:
-                secret: '%kernel.secret%'
-                lifetime: 604800 # 1 semaine
-                path: /
+            # remember_me:
+            #     secret: '%kernel.secret%'
+            #     lifetime: 604800 # 1 semaine
+            #     path: /
 
     # 3. Contrôle d'accès (Hiérarchie et Routes)
     # C'est ici que tu décides qui a le droit de voir tes pages
