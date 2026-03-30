@@ -6,12 +6,16 @@ use App\Entity\Employe;
 use App\Form\RegistrationFormType;
 use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Encoding\Encoding;
 
 class RegistrationController extends AbstractController
 {
@@ -21,7 +25,8 @@ class RegistrationController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher,
         UserAuthenticatorInterface $userAuthenticator,
         AppCustomAuthenticator $authenticator,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        GoogleAuthenticatorInterface $googleAuthenticator
     ): Response {
 
         if ($this->getUser()) {
@@ -46,6 +51,9 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $secret = $googleAuthenticator->generateSecret();
+            $user->setGoogleAuthenticatorSecret($secret);
+
             // Note : Les champs 'nom', 'prenom', 'email', 'date_entree' et 'statut'
             // sont automatiquement remplis dans $user par le $form->handleRequest($request)
             // car ils sont "mappés" par défaut dans le RegistrationFormType.
@@ -53,16 +61,41 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // 3. Authentification automatique après l'inscription
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+            $request->getSession()->set('registration_email', $user->getEmail());
+            return $this->redirectToRoute('app_register_success');
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
+
+    #[Route('/register/success', name: 'app_register_success')]
+    public function success(Request $request, GoogleAuthenticatorInterface $googleAuthenticator, EntityManagerInterface $em): Response
+    {
+        $email = $request->getSession()->get('registration_email');
+        if (!$email) return $this->redirectToRoute('app_register');
+
+        $user = $em->getRepository(Employe::class)->findOneBy(['email' => $email]);
+        $qrCodeUrl = $googleAuthenticator->getQRContent($user);
+
+        $qrCode = new QrCode(
+            data: $qrCodeUrl,
+            encoding: new Encoding('UTF-8'),
+        );
+
+        // 2. On utilise le Writer pour générer l'image
+        $writer = new PngWriter();
+        $result = $writer->write($qrCode);
+
+        // 3. On génère la Data URI pour Twig
+        $qrCodeDataUri = $result->getDataUri();
+
+
+        return $this->render('registration/success.html.twig', [
+            'qrCodeDataUri' => $qrCodeDataUri,
+            'secret' => $user->getGoogleAuthenticatorSecret()
+        ]);
+    }
+
 }

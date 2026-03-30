@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vérification de sécurité - TaskLinker{% endblock %}
+
+{% block body %}
+<div class="auth-container min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg border-t-4 border-[#1C5B50]">
+
+        <div class="text-center">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
+                <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-extrabold text-gray-900">Double Authentification</h2>
+            <p class="mt-2 text-sm text-gray-600">
+                Entrez le code généré par votre application de sécurité.
+            </p>
+        </div>
+
+        <form class="mt-8 space-y-6 w-full" action="{{ path('2fa_login_check') }}" method="post">
+            {% if authenticationError %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-sm" role="alert">
+                    {{ authenticationError|trans(authenticationErrorData, 'scheb_two_factor') }}
+                </div>
+            {% endif %}
+
+            <div class="rounded-md shadow-sm -space-y-px">
+                <div>
+                    <label for="_auth_code" class="sr-only">Code de vérification</label>
+                    <input id="_auth_code"
+                           name="_auth_code"
+                           type="text"
+                           autocomplete="one-time-code"
+                           inputmode="numeric"
+                           pattern="[0-9]*"
+                           max="6"
+                           required
+                           class="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#1C5B50] focus:border-[#1C5B50] focus:z-10 sm:text-lg text-center tracking-[1em] font-bold"
+                           placeholder="000000"
+                           autofocus>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <div class="text-sm">
+                    <a href="{{ path('app_logout') }}" class="font-medium text-[#1C5B50] hover:text-[#164a41]">
+                        Annuler et se déconnecter
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#1C5B50] hover:bg-[#164a41] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1C5B50] transition-colors">
+                    Vérifier le code
+                </button>
+            </div>
+
+            {# Optionnel : Trusted devices (si activé dans ton config) #}
+            {% if displayTrustedOption %}
+                <div class="flex items-center">
+                    <input id="_trusted" name="_trusted" type="checkbox" class="h-4 w-4 text-[#1C5B50] focus:ring-[#1C5B50] border-gray-300 rounded">
+                    <label for="_trusted" class="ml-2 block text-sm text-gray-900">
+                        Faire confiance à cet appareil pendant 30 jours
+                    </label>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

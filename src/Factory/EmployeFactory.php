@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Employe;
+use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
@@ -13,11 +14,13 @@ final class EmployeFactory extends PersistentProxyObjectFactory
 {
 
     private UserPasswordHasherInterface $passwordHasher;
+    private GoogleAuthenticatorInterface $googleAuthenticator;
 
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    public function __construct(UserPasswordHasherInterface $passwordHasher, GoogleAuthenticatorInterface $googleAuthenticator)
     {
         parent::__construct();
         $this->passwordHasher = $passwordHasher;
+        $this->googleAuthenticator = $googleAuthenticator;
     }
 
     #[\Override]
@@ -43,6 +46,7 @@ final class EmployeFactory extends PersistentProxyObjectFactory
             // On définit un mot de passe par défaut en clair ici
             'password' => 'password',
             'roles' => ['ROLE_USER'],
+            'googleAuthenticatorSecret' => $this->googleAuthenticator->generateSecret(),
         ];
     }
 

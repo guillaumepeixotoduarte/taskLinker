@@ -31,6 +31,10 @@ security:
                 # Où rediriger après la déconnexion
                 target: app_home
 
+            two_factor:
+                auth_form_path: 2fa_login    # The route name you have used in the routes.yaml
+                check_path: 2fa_login_check
+
             # Permet de se souvenir de l'utilisateur (optionnel)
             # remember_me:
             #     secret: '%kernel.secret%'
@@ -40,10 +44,19 @@ security:
     # 3. Contrôle d'accès (Hiérarchie et Routes)
     # C'est ici que tu décides qui a le droit de voir tes pages
     access_control:
-        # La page de login et d'inscription doivent rester publiques
-        - { path: ^/login, roles: PUBLIC_ACCESS }
-        - { path: ^/register, roles: PUBLIC_ACCESS }
+        # 1. On autorise les pages de connexion et 2FA en premier
+        - { path: ^/login$, roles: PUBLIC_ACCESS }
+        - { path: ^/2fa, roles: IS_AUTHENTICATED_2FA_IN_PROGRESS }
+
+        # 2. On autorise l'accueil
         - { path: ^/$, roles: PUBLIC_ACCESS }
+
+        # 3. On autorise les autres pages publiques spécifiques
+        - { path: ^/register, roles: PUBLIC_ACCESS }
+        - { path: ^/logout, roles: PUBLIC_ACCESS }
+
+        # 4. EN DERNIER : On protège tout le reste du site
+        # Cette règle sert de "filet de sécurité" pour tout ce qui n'a pas été autorisé plus haut
         - { path: ^/, roles: ROLE_USER }
 
     # Optionnel : Hiérarchie des rôles

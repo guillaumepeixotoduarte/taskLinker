@@ -21,7 +21,7 @@
     </head>
     <body>
         <div id="main-container">
-            {% set hideMenuRoutes = ['app_home', 'app_login', 'app_register'] %}
+            {% set hideMenuRoutes = ['app_home', 'app_login', 'app_register', 'app_register_success', '2fa_login'] %}
             {% if app.request.attributes.get('_route') not in hideMenuRoutes %}
                 <nav class="navbar d-block">
                     <a href="/" id="logo">
