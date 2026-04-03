@@ -17,29 +17,38 @@
 
                 <div class="mb-4">
                     {{ form_label(registrationForm.nom, null, {'label_attr': {'class': 'block text-white mb-2'}}) }}
-                    {{ form_widget(registrationForm.nom, {'attr': {'class': 'w-full p-2 rounded'}}) }}
+                    {{ form_widget(registrationForm.nom, {'attr': {'class': 'w-full p-2 rounded mb-1'}}) }}
                     {{ form_errors(registrationForm.nom) }}
                 </div>
 
                 <div class="mb-4">
                     {{ form_label(registrationForm.prenom, null, {'label_attr': {'class': 'block text-white mb-2'}}) }}
-                    {{ form_widget(registrationForm.prenom, {'attr': {'class': 'w-full p-2 rounded'}}) }}
+                    {{ form_widget(registrationForm.prenom, {'attr': {'class': 'w-full p-2 rounded mb-1'}}) }}
                     {{ form_errors(registrationForm.prenom) }}
                 </div>
 
                 <div class="mb-4">
                     {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'block text-white mb-2'}}) }}
-                    {{ form_widget(registrationForm.email, {'attr': {'class': 'w-full p-2 rounded'}}) }}
-                    {{ form_errors(registrationForm.email) }}
+                    {{ form_widget(registrationForm.email, {'attr': {'class': 'w-full p-2 rounded mb-1'}}) }}
+                    {% for error in registrationForm.email.vars.errors %}
+                        <p class="text-red-800 bg-red-100/90 border-l-4 border-red-600 p-2 mt-2 text-sm rounded-r shadow-sm">
+                            ⚠ {{ error.message }}
+                        </p>
+                    {% endfor %}
                 </div>
 
                 <div class="mb-4">
                     {{ form_label(registrationForm.plainPassword.first, null, {'label_attr': {'class': 'block text-white mb-2'}}) }}
-                    {{ form_widget(registrationForm.plainPassword.first) }}
+                    {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'mb-1'}}) }}
+                    {% for error in registrationForm.plainPassword.first.vars.errors %}
+                        <p class="text-red-800 bg-red-100/90 border-l-4 border-red-600 p-2 mt-2 text-sm rounded-r shadow-sm">
+                            ⚠ {{ error.message }}
+                        </p>
+                    {% endfor %}
 
                     <div class="mt-4">
                         {{ form_label(registrationForm.plainPassword.second, null, {'label_attr': {'class': 'block text-white mb-2'}}) }}
-                        {{ form_widget(registrationForm.plainPassword.second) }}
+                        {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'mb-1'}}) }}
                     </div>
                 </div>
 
