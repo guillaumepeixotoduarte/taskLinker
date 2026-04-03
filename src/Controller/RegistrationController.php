@@ -37,6 +37,11 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
+        if ($form->isSubmitted() && !$form->isValid()) {
+            return $this->render('registration/register.html.twig', [
+                'registrationForm' => $form->createView(),
+            ], new Response(null, Response::HTTP_UNPROCESSABLE_ENTITY));
+
         if ($form->isSubmitted() && $form->isValid()) {
             // 1. On récupère les données du champ non-mappé (le rôle)
             $user->setRoles(['ROLE_USER']);

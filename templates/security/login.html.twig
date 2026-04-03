@@ -13,11 +13,7 @@
             <h1 class="text-white text-[34px] font-bold text-center mb-10">Se connecter</h1>
             {% if error %}
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-                    {% if error.messageKey == 'Invalid credentials.' %}
-                        Identifiants invalides. Vérifiez votre email ou votre mot de passe.
-                    {% else %}
-                        {{ error.messageKey|trans(error.messageData, 'security') }}
-                    {% endif %}
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
                 </div>
             {% endif %}
 
