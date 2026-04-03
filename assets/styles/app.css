@@ -92,7 +92,7 @@ header {
 /* Auth Container */
 
 .auth-container {
-    background: url('../images/background-auth.jpg') center bottom #1C5B50;
+    background: url('../images/background-auth.jpg') center #1C5B50;
     background-size: cover;
     flex: 1;
     height: 100%;
